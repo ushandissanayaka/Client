@@ -1,12 +1,14 @@
-import React from 'react'
-import SkinDiseasesCardCompo from '../components/SkinDiseasesCardCompo'
-
+import React from "react";
+import SkinDiseasesCardCompo from "../components/SkinDiseasesCardCompo";
 
 export default function Home() {
   return (
     <div>
-      <h1>Home</h1>
-      <SkinDiseasesCardCompo />
+      <div>
+        <SkinDiseasesCardCompo text="Acne" />
+        <SkinDiseasesCardCompo text="Psoriasis" />
+        <SkinDiseasesCardCompo text="Melanoma" />
+      </div>
     </div>
-  )
+  );
 }
