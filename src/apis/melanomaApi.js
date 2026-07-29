@@ -38,7 +38,15 @@ export async function getMelanomaEvaluation() {
   try {
     const response = await axios.get(`${MELANOMA_API_URL}/api/evaluation`, { timeout: 30000 });
     if (!response.data?.success) throw new Error("The evaluation service did not return data.");
-    return response.data;
+    // Newer API versions return every graph in `evaluation_plots`; keep the
+    // original single-chart response working while the backend is updated.
+    const plots = Array.isArray(response.data.evaluation_plots)
+      ? response.data.evaluation_plots
+      : response.data.evaluation_chart_url
+      ? [{ name: "Evaluation results", url: response.data.evaluation_chart_url }]
+      : [];
+
+    return { ...response.data, evaluation_plots: plots };
   } catch (error) {
     if (error.response) throw new Error(error.response.data?.detail || `Unable to load evaluation data (status ${error.response.status}).`);
     if (error.request) throw new Error("Unable to reach the Melanoma evaluation server. Confirm it is running on http://localhost:5003.");
