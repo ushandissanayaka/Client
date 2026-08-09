@@ -89,11 +89,10 @@ export default function MelanomaEvaluation() {
         {evaluation && <>
           <section className="mt-8" aria-labelledby="evaluation-summary-title">
             <h2 id="evaluation-summary-title" className="text-lg font-semibold">Model evaluation summary</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <MetricCard label="Precision" value={formatPercentage(precision)} description="Correct positive predictions" />
               <MetricCard label="Recall" value={formatPercentage(recall)} description="Detected positive cases" />
               <MetricCard label="F1 score" value={formatPercentage(f1Score)} description="Balance of precision and recall" />
-              <MetricCard label="N value" value={formatCount(totalN)} description="Total evaluated images" />
             </div>
             {evaluation.sample_counts?.by_skin_tone?.length > 0 && (
               <p className="mt-3 text-sm text-slate-400">
@@ -102,7 +101,6 @@ export default function MelanomaEvaluation() {
             )}
           </section>
           <DataTable title="Overall metrics" rows={evaluation.overall_metrics} />
-          <DataTable title="Performance by skin tone" rows={evaluation.skin_tone_metrics} />
           <section className="mt-8">
             <h2 className="text-lg font-semibold">Evaluation plots</h2>
             {evaluation.evaluation_plots?.length ? (
